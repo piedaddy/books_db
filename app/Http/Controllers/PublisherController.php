@@ -31,8 +31,22 @@ class PublisherController extends Controller
 
     public function create() 
     {
+      return view('publishers.create');
 
     }
 
+
+    public function store(Request $request) // Request is how we are telling laravael that the parameter is TYPE request, it is a class 
+                                            // $request is a variable that will have all the informationa that comes from the browser as its value 
+                                            // usually just needed in POST 
+                                            // request gives you form info mostly 
+                                            // we can see what we sent to the server
+    {
+      $p = new Publisher;  // create empty obect of type 'Publisher'
+      $p->title = $request->       input('title'); // will give the value of the input title from the form 
+  // this is the name of column    name of input
+      $p->save(); // i have grabbed the object p and used the save method which saves it to the DB
+
+    }
 
 }
