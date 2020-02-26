@@ -18,4 +18,17 @@ class Book extends Model
                                 //is basically telling you the path 
 
     }
+
+    //one book can have one genre
+    public function genre()
+    {
+        return $this->belongsTo(Genre::class); 
+    }
+
+    public function cart()
+    {
+        return $this->belongsTo(CartItem::class);
+    }
+
+
 }

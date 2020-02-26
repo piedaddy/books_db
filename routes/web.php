@@ -55,3 +55,13 @@ Route::get('/publishers/{publisher_id}', 'PublisherController@show');
 Route::post('/publishers', 'PublisherController@store'); //gets and posts can have the same url
 
 
+//PLAYGROUND DAY 32 
+Route::get('/genres/index', 'GenreController@index');
+Route::get('/genres/{id}', 'GenreController@show');
+
+//MORNING WORKOUT DAY 33
+Route::get('/cart', 'CartController@index');
+Route::get('/cart/add/{book_id}', 'CartController@add');
+
+
+

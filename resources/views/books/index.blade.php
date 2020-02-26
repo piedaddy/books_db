@@ -7,6 +7,8 @@
         <h3>{{$book->title}}</h3>
         <p> {{$book->authors}}</p>
         <a href="{{ action('BookExampleController@show', [$book->id]) }}">Read More!</a>
+        <a href="{{ action('CartController@add', [$book->id]) }}">Add to cart</a>
+
       </div>
     </div>
   @endforeach  
