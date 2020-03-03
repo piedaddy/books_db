@@ -37,13 +37,15 @@ class CartController extends Controller
     }
 
 //FOR POST METHOD::
-    // public function add()
-    // {
-    //    // $request->input('title');
-    //     // $cart->publisher = $request->input('publisher_id');
-    //     // //$cart->count ++;
-    //     // $cart->save();
-    // }
+    public function postAdd(Request $request)
+    {
+       $i= new CartItem;
+       $i->book_id = $request->input('book_id');
+       $i->count = 1;
+       $i->save();
+       return redirect('/cart');
+
+    }
 
 
 

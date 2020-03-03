@@ -3,7 +3,7 @@
   @foreach($items as $item)
     <h3>{{$item->book->title}}</h3>
     <p>Published by: {{$item->book->publisher->title}}</p>
-    <p>Count: {{$item->count}} books</p>
+    <p>Count: {{$item->count}}</p>
   @endforeach
 </div> 
 

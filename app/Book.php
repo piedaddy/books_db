@@ -3,6 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Publisher;
+use App\Genre;
+use App\Cart;
+use App\Review;
+
+
 
 class Book extends Model
 {
@@ -28,6 +34,11 @@ class Book extends Model
     public function cart()
     {
         return $this->belongsTo(CartItem::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
     }
 
 

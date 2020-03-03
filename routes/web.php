@@ -40,6 +40,13 @@ Route::get('/books/{id}/edit', 'BookExampleController@edit');
 Route::post('/books/{id}/edit', 'BookExampleController@update');
 Route::get('/books/{id}/delete', 'BookExampleController@delete');
 
+//MORNING WORKOUT DAY 42
+Route::post('/books/review/{id}', 'BookExampleController@review');
+
+//If i want to use a new controller for the reviews
+// Route::post('/review/{book_id}', 'ReviewController@store')
+
+
 
 
 
@@ -57,11 +64,18 @@ Route::post('/publishers', 'PublisherController@store'); //gets and posts can ha
 
 //PLAYGROUND DAY 32 
 Route::get('/genres/index', 'GenreController@index');
+Route::get('/genres/create', 'GenreController@create'); 
+Route::post('/genres', 'GenreController@store');
 Route::get('/genres/{id}', 'GenreController@show');
+
+
 
 //MORNING WORKOUT DAY 33
 Route::get('/cart', 'CartController@index');
 Route::get('/cart/add/{book_id}', 'CartController@add');
 
+//IF USING PUSH
+Route::post('/cart/add', 'CartController@postAdd');
 
 
+//SUBMITTING A FORM IS THE ONLY WAY TO SEND THINGS TO A SERVER THROUGH POST

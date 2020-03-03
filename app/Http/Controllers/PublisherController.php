@@ -19,7 +19,6 @@ class PublisherController extends Controller
     public function show($id)
     {
         $publisher = Publisher::find($id); 
-      
         $books = DB::select('SELECT * FROM `books` WHERE `publisher_id` LIKE "'.$id.'"');
         //could also do 
           // $books = Book::where('publisher_id', $id)->get()
