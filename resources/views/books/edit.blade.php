@@ -8,10 +8,12 @@
     <input type="text" name="image" value="{{$book->image}}">
 
   <label>Genre</label>
-    <select name="genre_id">
+    <select name="genre">
       @foreach($genres as $genre)
-       <option value="{{$genre->id}}" {{$genre->id == $book->genre->id ? "selected" : ""}}>{{$genre->name}}</option>
-      @endforeach
+       {{-- <option value="{{$genre->id}}" {{$genre->id == $book->genre->id ? "selected" : ""}}>{{$genre->name}}</option> --}}
+       <option value="{{$genre->name}}">{{$genre->name}}</option>
+       @endforeach
+    </select> 
       
   <label>Publisher</label>
   <select name= "publisher_id">

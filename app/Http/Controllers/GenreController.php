@@ -19,7 +19,7 @@ class GenreController extends Controller
     {
         $genre = Genre::find($id);
         $books = Book::where('genre_id', $id)->get();
-        return view('genres.show', compact('genre', 'books'));
+        return view('genres.show', compact('genre', 'books', 'id'));
     }
 
     public function create()
@@ -32,7 +32,7 @@ class GenreController extends Controller
     public function store(Request $request)
     {
         $g = new Genre; 
-        $g->name = $request->input('title');
+        $g->name = $request->input('name');
         $g->save();
         return redirect('/genres/index');
 

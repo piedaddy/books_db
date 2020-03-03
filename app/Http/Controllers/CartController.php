@@ -5,16 +5,23 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Book;
 use App\CartItem;
+use App\Publisher;
+use DB;
 
 class CartController extends Controller
 {
     
     public function index()
     {
-        $items = CartItem::all(); 
+        $items = CartItem::all();
         return view('carts.index', compact('items'));
     }
 
+    public function show($id)
+    {
+        $item = CartItem::findOrFail($id);
+        return view('carts.show', compact('item', 'id'));
+    }
 //FOR THE GET METHOD::
     public function add($book_id)
     {
@@ -37,23 +44,49 @@ class CartController extends Controller
     }
 
 //FOR POST METHOD::
-    public function postAdd(Request $request)
-    {
-       $i= new CartItem;
-       $i->book_id = $request->input('book_id');
-       $i->count = 1;
-       $i->save();
-       return redirect('/cart');
+    // public function postAdd(Request $request, $book_id)
+    // {
 
-    }
+    // $i = CartItem::where('book_id', $book_id)->first();
 
+    // if($i==null){ 
+    //    $i= new CartItem;
+    //    $i->book_id = $request->input('book_id');
+    //    $i->count = 1;
+    //    $i->save();
+    // } else {
+    //     $i->count = $i->count +1;
+    //     $i->save();
+    // }
+    // return redirect('/cart');
 
+    // }
 
     //when link is clicked, a new class of cart will be made
     //when link clicked, this->book needs to be added to the cart index 
 
-    // Create method add in CartController. This method will be creating new cart items. In the list of books (view returnd from index of your BookController) create next to each book also Add to Cart button. By clicking on this button new cart item will be created with the book_id set to "added" book. Default count of cart_item should be 1.
+    public function delete($id)
+    {
+        $item = CartItem::find($id);
+        if($item->count > 1)
+        {
+            $item->count -= 1;
+            $item->save();
+            return redirect()->action('CartController@index');
+        }
+       else if($item->count === 1) {
+         $item->delete();
+        // DB::statement('TRUNCATE TABLE `cart_items`');
+        return redirect()->action('CartController@index');
+       }
+    }
 
+    public function empty()
+    {
+        DB::statement('TRUNCATE TABLE `cart_items`');
+        return redirect()->action('CartController@index');
+
+    }
 
 
 

@@ -40,12 +40,14 @@ Route::get('/books/{id}/edit', 'BookExampleController@edit');
 Route::post('/books/{id}/edit', 'BookExampleController@update');
 Route::get('/books/{id}/delete', 'BookExampleController@delete');
 
-//MORNING WORKOUT DAY 42
+//MORNING WORKOUT DAY 37
 Route::post('/books/review/{id}', 'BookExampleController@review');
 
 //If i want to use a new controller for the reviews
 // Route::post('/review/{book_id}', 'ReviewController@store')
 
+//AFTERNOON DAY 37
+Route::get('/books-qb', 'BookQueryBuilderController@index');
 
 
 
@@ -72,10 +74,15 @@ Route::get('/genres/{id}', 'GenreController@show');
 
 //MORNING WORKOUT DAY 33
 Route::get('/cart', 'CartController@index');
+Route::get('/cart/show/{id}', 'CartController@show');
+
 Route::get('/cart/add/{book_id}', 'CartController@add');
+Route::get('/cart/empty', 'CartController@empty');
+
 
 //IF USING PUSH
-Route::post('/cart/add', 'CartController@postAdd');
+Route::post('/cart/add/{book_id}', 'CartController@postAdd');
 
+Route::get('/cart/delete/{id}', 'CartController@delete');
 
 //SUBMITTING A FORM IS THE ONLY WAY TO SEND THINGS TO A SERVER THROUGH POST
