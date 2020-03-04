@@ -23,6 +23,7 @@ class CartController extends Controller
         return view('carts.show', compact('item', 'id'));
     }
 //FOR THE GET METHOD::
+/*
     public function add($book_id)
     {
         $item = CartItem::where('book_id', $book_id)->first();
@@ -42,25 +43,26 @@ class CartController extends Controller
         return redirect('/cart');
 
     }
+    */
 
 //FOR POST METHOD::
-    // public function postAdd(Request $request, $book_id)
-    // {
+    public function postAdd(Request $request, $book_id)
+    {
 
-    // $i = CartItem::where('book_id', $book_id)->first();
+    $i = CartItem::where('book_id', $book_id)->first();
 
-    // if($i==null){ 
-    //    $i= new CartItem;
-    //    $i->book_id = $request->input('book_id');
-    //    $i->count = 1;
-    //    $i->save();
-    // } else {
-    //     $i->count = $i->count +1;
-    //     $i->save();
-    // }
-    // return redirect('/cart');
+    if($i==null){ 
+       $i= new CartItem;
+       $i->book_id = $request->input('book_id');
+       $i->count = 1;
+       $i->save();
+    } else {
+        $i->count = $i->count +1;
+        $i->save();
+    }
+    return redirect('/cart');
 
-    // }
+    }
 
     //when link is clicked, a new class of cart will be made
     //when link clicked, this->book needs to be added to the cart index 

@@ -62,7 +62,13 @@ class BookQueryBuilderController extends Controller
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
         $books = Book::query()  
         ->orderBy('title', 'asc')
-        ->paginate(10); //will give us a new type of object
+        ->with('publisher')//EAGER LOADING // looped through all books, created an array with all the IDs, then can run a single querry to find the publishers with these ids, and then by the id it assigns it to a specific property
+                        // we had many books, each with a publsher ID
+                        // so laravel selects the books, then creates an array, then it selects the necessary publishers for each element of the array, and then loops through them and assigns them to where it needs to be 
+                        //more PHP, less mysql
+                        // good for optimizing experience 
+        ->with('reviews') // GIVE THE NAME OF THE RELATIONSHIP!!!!not the table or model!!! so we find this name though in the model
+         ->paginate(100); //will give us a new type of object
         //dd($books);
         return view('books.page', compact('books'));
     }

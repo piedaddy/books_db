@@ -116,4 +116,11 @@ class BookExampleController extends Controller
         return redirect('/books/show/'.$book_id);
         // return redirect()->action('BookExampleController@show', $book_id);
     }
+
+    public function search(Request $request) 
+    {
+        $name = $request->input('search');
+        $books = Book::where('title', 'like', $name)->get();
+        return view('/books/index', compact('books'));
+    }
 }

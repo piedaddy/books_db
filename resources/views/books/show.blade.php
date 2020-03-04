@@ -15,31 +15,40 @@
       {{-- <p> Published by: {{$book->publisher->title}}</p>  --}}
       <p> Published by: {{$book->publisher ? $book->publisher->title : 'Unknown publisher'}}</p> 
 
-      <p> Genre: {{$book->genre ? $book->genre->name :  'this book has not been categorized into genre yet'}}
-      </p>  
+      @if($book->genre)
+      <p> Genre: {{$book->genre ? $book->genre->name :  'this book has not been categorized into genre yet'}}</p> 
+      @endif 
 
       {{-- get property of publisher, and then get the title --}}
       {{-- $book=element  publisher = method delcared in Boook.php  title= part of table in publisher  --}}
       {{-- the book belongs to the publisher 
       if something1 belongs to something2, then something2 will have an id inside the something1 --}}
+     
 
-      <p>Reviews:
-        @foreach($book->reviews as $review) 
-        {{-- @foreach($book->reviews()->latest()->get() as $review)  --}}
-        {{-- @foreach($book->reviews()->orderBy('created_at', 'asc')->get() as $review)  --}}
+  
+        <p>Reviews:
+        {{-- @if(isset($book->review))
+        There are no reviews currently for this book</p>
+        @endif --}}
+          @foreach($book->reviews as $review) 
+          {{-- @foreach($book->reviews()->latest()->get() as $review)  --}}
+          {{-- @foreach($book->reviews()->orderBy('created_at', 'asc')->get() as $review)  --}}
 
-        {{-- //this makes sense because it is putting a query together, select everything from reviews where books exists, and then it takes all the review objects and then sets it as $reviews, so then we can access their values as $review  --}}
+          {{-- //this makes sense because it is putting a query together, select everything from reviews where books exists, and then it takes all the review objects and then sets it as $reviews, so then we can access their values as $review  --}}
 
-        {{-- // because i defined a relationship between book and review i can jsut select it from the books --}}
-          <div class="reviews">
-            <strong>{{$review->review}}</strong><br>
-            <p>Written by: {{$review->name}}</p>
-          </div>
-        @endforeach 
+          {{-- // because i defined a relationship between book and review i can jsut select it from the books --}}
+            <div class="reviews">
+              <strong>{{$review->review}}</strong><br>
+              <p>Written by: {{$review->name}}</p>
+            </div>
+          @endforeach 
+         
 
 
-      <p>Add a review:</p>
 
+          {{-- <p>{{$book->reviews->review->name == null ? 'Be the first!' : 'Add a review'}}</p> --}}
+
+          <p>Add a review</p>
         @if (count($errors) > 0)
         <div class="alert alert-danger">
             <ul>
@@ -55,12 +64,13 @@
           </div>
         @endif
     
+
         <form action="{{action('BookExampleController@review', ['id'=> $book->id])}}" method="post"> 
           {{-- <form action="{{action('BookExampleController@review', $book->id)}}" method="post">
             //i could also send just the value if there is only one parameter  --}}
 
           @csrf
-          <textarea name="review" rows="10" cols="70" placeholder="Write your review here">{{old('review')}}</textarea>
+          <textarea name="review" rows="3" cols="30" placeholder="Write your review here">{{old('review')}}</textarea>
           <br>
           <input type="text" name="name" value= "{{old('name')}}" placeholder="Your Name">
           <br>
@@ -70,6 +80,8 @@
         </form>
 
       <a href="{{ action('BookExampleController@index') }}">Go back to catalogue!</a>
+      <a href="{{ action('CartController@add', [$id]) }}">Add to cart</a>
+
     </div>
 
   </div>

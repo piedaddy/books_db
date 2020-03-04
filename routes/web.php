@@ -29,6 +29,7 @@
 
 // Route::get('/booksORM/show/{id?}', 'BookORMController@show'); // the  ? makes it so that this parameter is optional
 // //if i wanted to use this though i would have to comment out the last route
+Route::post('/books/search', 'BookExampleController@search');
 
 Route::get('/books/index', 'BookExampleController@index');
 Route::get('/books/create', 'BookExampleController@create');

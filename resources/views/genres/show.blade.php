@@ -4,8 +4,12 @@
 
     @foreach($genre->books as $book)
       <p>{{$book->title}}</p>
-      <img src="{{$book->image}}" width="100px" style="padding:1em 0em";>
-      <img src="{{$book->image_file}}" width="100px" style="padding:1em 0em";>
+      @if($book->image)
+        <img src="{{$book->image}}" width="100px" style="padding:1em 0em";>
+      @endif
+      @if($book->image_file)
+        <img src="{{$book->image_file}}" width="100px" style="padding:1em 0em";>
+      @endif
 
     @endforeach
 

@@ -1,7 +1,7 @@
-<form action="/genres" method="post">
+<form action="{{action('GenreController@store')}}" method="post">
   @csrf 
   <label>Genre Type</label>
-    <input type="text" name="title">
+    <input type="text" name="name">
 
   <input type="submit" value="submit">
 </form>

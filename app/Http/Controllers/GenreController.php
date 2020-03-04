@@ -24,8 +24,8 @@ class GenreController extends Controller
 
     public function create()
     {
-        $genre= Genre::all();
-        return view('genres.create', compact('genre'));
+        $genres= Genre::all();
+        return view('genres.create', compact('genres'));
         return redirect('/genres/index');
     }
 
@@ -35,6 +35,5 @@ class GenreController extends Controller
         $g->name = $request->input('name');
         $g->save();
         return redirect('/genres/index');
-
     }
 }
