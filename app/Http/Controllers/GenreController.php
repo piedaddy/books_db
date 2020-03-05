@@ -35,5 +35,11 @@ class GenreController extends Controller
         $g->name = $request->input('name');
         $g->save();
         return redirect('/genres/index');
+
+        if($bookshop->books()->find($book) === null) {
+            //   this is the method we defined in the model!
+            //                  vvv
+                    $bookshop->books()->attach($book); // now we have attached the book that we selected from the ID and connects it to the bookshop ID
+                    }
     }
 }

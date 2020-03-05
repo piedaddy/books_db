@@ -8,6 +8,9 @@
   <a href="{{action('BookExampleController@create')}}">Add a new book</a>
   <a href="{{action('CartController@empty')}}">Empty cart</a>
   <a href="{{action('GenreController@index')}}">List of genres</a>
+  <a href="{{action('BookshopController@index')}}">List of bookshops</a>
+
+  
 
 
 </nav>
@@ -34,8 +37,6 @@
 
         <a href="{{ action('BookExampleController@show', [$book->id]) }}">Read More!</a>
         {{-- <a href="{{ action('CartController@add', [$book->id]) }}">Add to cart</a> --}}
-
-
         <form action= "{{action('CartController@postAdd', [$book->id])}}" method="post">
           @csrf
           <input type="hidden" name="book_id" value={{$book->id}}> 

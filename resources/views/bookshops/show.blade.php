@@ -10,7 +10,8 @@
   <h3>{{$bookshop->name}}</h3> 
       {{$bookshop->city}}
 
-      <h4>Books:</h4>
+      <h4>Book Inventory:</h4>
+      @auth
       <form action="{{action('BookshopController@addBook', ['id'=> $bookshop->id])}}" method="post">
         @csrf 
         <select name="book_id" id="book_id">
@@ -20,6 +21,22 @@
         </select>
           <button type="submit">Add</button>
       </form> 
+      @endauth
+
+      <ol>
+        @foreach($bookshop->books as $book)
+          <li><h4>{{$book->title}}</h4></li>
+          @can('admin')
+          <form action= "{{action('BookshopController@removeBook', $bookshop->id)}}" method="post">
+            @csrf
+            {{-- OR CAN DO 
+            <input type="hidden" name="book_id" value={{$book->id}}> --}}
+            <button name="book_id" value={{$book->id}} type="submit">Delete</button> 
+          </form>
+          @endcan
+        @endforeach
+      </ol>
+
 </div>
 
 @endsection

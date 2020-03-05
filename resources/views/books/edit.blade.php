@@ -8,7 +8,7 @@
     <input type="text" name="image" value="{{$book->image}}"> --}}
 
   <label>Genre</label>
-    <select name="genre_id">
+    <select name="genre_name">
       @foreach($genres as $genre)
        {{-- <option value="{{$genre->id}}" {{$genre->id == $book->genre->id ? "selected" : ""}}>{{$genre->name}}</option> --}}
        {{-- <option value="{{$genre->name}}">{{$genre->name}}</option> <br> --}}

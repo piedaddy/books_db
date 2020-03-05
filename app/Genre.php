@@ -10,8 +10,11 @@ class Genre extends Model
     
     public function books() 
     { //one genre can have many books
-        return $this->hasMany(Book::class);
+        return $this->belongsToMany(Book::class);
         //tells laravel to find genre.id inside book, and not a book id inside genre
-
     }
+
+
+
+
 }

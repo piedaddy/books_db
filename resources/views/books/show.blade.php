@@ -19,17 +19,32 @@
       {{-- <p> Published by: {{$book->publisher->title}}</p>  --}}
       <p> Published by: {{$book->publisher ? $book->publisher->title : 'Unknown publisher'}}</p> 
 
-      @if($book->genre)
+      {{-- @if($book->genre)
       <p> Genre: {{$book->genre ? $book->genre->name :  'this book has not been categorized into genre yet'}}</p> 
-      @endif 
+      @endif  --}}
+      Genre(s): 
+      @foreach($book->genres as $genre)
+      <ul>
+        <li>{{$genre->name}}</li>
+      </ul>
+      @endforeach
 
       {{-- get property of publisher, and then get the title --}}
       {{-- $book=element  publisher = method delcared in Boook.php  title= part of table in publisher  --}}
       {{-- the book belongs to the publisher 
       if something1 belongs to something2, then something2 will have an id inside the something1 --}}
      
+@auth
+      <div class="bookshop-book-list">
+      <strong>Sold at the following bookshops:</strong>
+      <ol>
+        @foreach($book->bookshops as $bookshop)
+        <li>{{$bookshop->name}}</li>
+        @endforeach
+      </ol>
+    </div>
+@endauth
 
-  
         <p>Reviews: <br>
         {{-- @if(isset($book->review))
         There are no reviews currently for this book</p>
@@ -104,7 +119,12 @@
   <a href="{{action('BookExampleController@edit', ['id' => $book->id])}}" >Add Genre</a>
 
       <a href="{{ action('BookExampleController@index') }}">Go back to catalogue!</a>
-      <a href="{{ action('CartController@postAdd', [$id]) }}">Add to cart</a>
+
+      <form action= "{{action('CartController@postAdd', [$book->id])}}" method="post">
+        @csrf
+        <input type="hidden" name="book_id" value={{$book->id}}> 
+        <input type="submit" value= "Add to cart">
+      </form>
 
     </div>
 

@@ -101,6 +101,8 @@ Route::get('/bookshop/create', 'BookshopController@create');
 Route::post('/bookshop/create', 'BookshopController@update');
 Route::get('/bookshops', 'BookshopController@index');
 Route::get('/bookshops/{id}', 'BookshopController@show');
-Route::post('/bookshops/{id}/add-book', 'BookshopController@addBook')->name('add-book');
+Route::post('/bookshops/{id}/add-book', 'BookshopController@addBook');
+Route::post('/bookshops/{id}/remove-book', 'BookshopController@removeBook')->middleware('can:admin');
+
 
 

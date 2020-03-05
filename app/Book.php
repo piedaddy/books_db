@@ -25,12 +25,6 @@ class Book extends Model
 
     }
 
-    //one book can have one genre
-    public function genre()
-    {
-        return $this->belongsTo(Genre::class); 
-    }
-
     public function cart()
     {
         return $this->belongsTo(CartItem::class);
@@ -41,5 +35,23 @@ class Book extends Model
         return $this->hasMany(Review::class);
     }
 
+    public function bookshops()
+    {
+        return $this->belongsToMany(Bookshop::class);
+    }
+
+
+    // //one book can have one genre
+    // public function genre()
+    // {
+    //     return $this->belongsTo(Genre::class); 
+    // }
+
+
+    //one book can have many genre
+    public function genres()
+    {
+        return $this->belongsToMany(Genre::class); 
+    }
 
 }

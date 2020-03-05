@@ -9,13 +9,14 @@ use DB;
 use App\Publisher;
 use App\Genre;
 use App\Review;
+use App\Bookshop;
 
 
 class BookExampleController extends Controller
 {
     public function index() 
     {
-        $books = Book::all();
+        $books = Book::orderBy('title', 'asc')->get();
         $genre = Genre::all();
         $view = view('books.index', compact('books', 'genre'));
              // same as books/index
@@ -26,12 +27,15 @@ class BookExampleController extends Controller
     public function show($id)
     {
         $book = Book::find($id);
+    
         // $reviews = Review::findOrFail($id);
        // $publisher = Publisher::find($book->publisher_id);
 
        //return $book->publisher->books;
             // will give us all the books where the publisher id is equal to the publisher id
-        $view = view('books.show', compact('book','id'));
+        $bookshops = Bookshop::all();
+        $genres = Genre::all();
+        $view = view('books.show', compact('book','id', 'bookshops', 'genres'));
         return $view;
     }
 
@@ -79,17 +83,25 @@ class BookExampleController extends Controller
 //to solidify edit to the database
     public function update(Request $request, $id)
     {
-        $book = Book::find($id); 
-        $book->title        = $request->input('title');
-        $book->authors      = $request->input('author');
-        $book->image        = $request->input('image');
-        $book->genre_id     = $request->input('genre_id');
-        $book->genre        = $request->input('genre');
-        $book->publisher_id = $request->input('publisher_id');
-        $book->save();
+        // $book = Book::find($id); 
+        // // $book->title        = $request->input('title');
+        // // $book->authors      = $request->input('author');
+        // // $book->image        = $request->input('image');
+        // $book->genre_id     = $request->input('genre_id');
+        // // $book->genre        = $request->input('genre');
+        // // $book->publisher_id = $request->input('publisher_id');
+        // $book->save();
 
-        //return redirect('/books/show/'.$id); // this is so that the url will change, and the form wont be resubmitted if the user refereshes
+        // //return redirect('/books/show/'.$id); // this is so that the url will change, and the form wont be resubmitted if the user refereshes
+        // return redirect()->action('BookExampleController@show', $id);
+
+        $book      = Book::findOrFail($id);
+        $genre     = $request->input('genre_name');
+        if($book->genres()->find($genre) === null) {
+         $book->genres()->attach($genre); 
+        }
         return redirect()->action('BookExampleController@show', $id);
+
     }
 
     public function delete($id)

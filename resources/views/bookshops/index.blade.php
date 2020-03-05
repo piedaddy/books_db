@@ -5,6 +5,8 @@
 
   <nav>
     <a href="{{action('BookshopController@create')}}">Create a new bookshop</a>
+    <a href="{{action('BookExampleController@index')}}">Go to book directory</a>
+
   </nav>
   <br>
 
@@ -15,19 +17,17 @@
   @endif
 
   <div class="bookshop-list">
-  {{-- @foreach($bookshops as $bookshop)
-    <h3>Bookshop name:</h3> {{$bookshop->name}}
-    <h3>Located in: </h3> {{$bookshop->city}}
-    <hr>
-  @endforeach --}}
-  @foreach($bookshops as $bookshop)
-  <h3>{{$bookshop->name}}</h3> 
-  {{$bookshop->city}}
-  <nav class="shop_link">
-    {{-- <a href="{{action('BookshopController@show', ['id'=>$id])}}">Learn more </a> --}}
-  </nav>
-    <hr>
-@endforeach
+    <ol>
+      @foreach($bookshops as $bookshop)
+        <li><h3>{{$bookshop->name}}</h3></li>
+        {{$bookshop->city}}
+        <nav class="shop_link">
+          <a href="{{action('BookshopController@show', ['id'=>$bookshop->id])}}">Learn more </a> 
+        </nav>
+        <hr>
+      @endforeach
+    </ol>
+
   {{-- <table>
       <tr class="table_headers">
         <th>Bookshop Name</th>

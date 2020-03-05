@@ -3,8 +3,14 @@
 body { 
   font-family: 'Spartan', sans-serif;
   background-color: rgb(231, 247, 241);
+  box-sizing: border-box;
 }
 
 nav {
   text-decoration: none;
+}
+
+ol{
+  margin:1em;
+  padding:0;
 }
