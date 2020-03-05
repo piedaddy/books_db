@@ -1,3 +1,7 @@
+@extends('admin.layout')
+
+@section('create')
+
 <form action="/publishers" method="post">
   @csrf 
   <input type="text" name="title">

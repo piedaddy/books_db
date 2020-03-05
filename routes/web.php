@@ -34,8 +34,11 @@ Route::post('/books/search', 'BookExampleController@search');
 Route::get('/books/index', 'BookExampleController@index');
 Route::get('/books/create', 'BookExampleController@create');
 Route::get('/books/show/{id}', 'BookExampleController@show');
-Route::post('/books', 'BookExampleController@store');
+Route::post('/books', 'BookExampleController@store')->middleware('auth'); 
+Auth::routes();
 
+Route::post('/review/{book_id}', 'ReviewController@store')->middleware('auth'); 
+Route::delete('review/{id}', 'ReviewController@delete')->middleware('can:admin'); // allowing admins, can checks the gates, admin is the name of the gate
 //PLAYGROUND DAY 32
 Route::get('/books/{id}/edit', 'BookExampleController@edit');
 Route::post('/books/{id}/edit', 'BookExampleController@update');
@@ -45,7 +48,7 @@ Route::get('/books/{id}/delete', 'BookExampleController@delete');
 Route::post('/books/review/{id}', 'BookExampleController@review');
 
 //If i want to use a new controller for the reviews
-// Route::post('/review/{book_id}', 'ReviewController@store')
+// Route::post('/review/{book_id}', 'ReviewController@store')->middleware('auth'); 
 
 //AFTERNOON DAY 37
 Route::get('/books-qb', 'BookQueryBuilderController@index');
@@ -87,3 +90,17 @@ Route::post('/cart/add/{book_id}', 'CartController@postAdd');
 Route::get('/cart/delete/{id}', 'CartController@delete');
 
 //SUBMITTING A FORM IS THE ONLY WAY TO SEND THINGS TO A SERVER THROUGH POST
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+
+//DAY 39 morning workout 
+Route::get('/bookshop/create', 'BookshopController@create');
+Route::post('/bookshop/create', 'BookshopController@update');
+Route::get('/bookshops', 'BookshopController@index');
+Route::get('/bookshops/{id}', 'BookshopController@show');
+Route::post('/bookshops/{id}/add-book', 'BookshopController@addBook')->name('add-book');
+
+

@@ -1,3 +1,6 @@
+@extends('admin.layout')
+
+@section('cart_index')
 <div>
   <h2>Cart</h2>
   <nav>
@@ -19,3 +22,5 @@
      {{$book->publisher->title}}
      this works becuase their relationship has been established already 
 --}}
+
+@endsection

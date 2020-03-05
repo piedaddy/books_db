@@ -1,3 +1,6 @@
+@extends('admin.layout')
+
+@section('cart_show')
 <a href="{{action('CartController@index')}}">Back to cart</a>
 
 <h3>{{$item->book->title}}</h3>
@@ -8,3 +11,4 @@
       <a href="{{action('CartController@delete', $id)}}">Delete from cart</a>
 
     </nav>
+@endsection

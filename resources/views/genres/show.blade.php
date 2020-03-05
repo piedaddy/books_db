@@ -1,3 +1,6 @@
+@extends('admin.layout')
+
+@section('genre_show')
 <div>
   <h2>{{$genre->name}}</h2>
   <p>Popular books of this genre: </p>
@@ -15,3 +18,4 @@
 
     <a href="{{action('GenreController@index')}}">back to list</a>
 </div>
+@endsection

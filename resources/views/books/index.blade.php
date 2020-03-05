@@ -1,3 +1,6 @@
+@extends('admin.layout')
+
+@section('books_index')
 <div> 
 <h1>Book Directory</h1>
 <nav>
@@ -45,4 +48,5 @@
 
 </div>
 
+@endsection
 {{-- by hidding the input the user won't see the input area and when they click the submit button it will still be added!! cooL!! --}}

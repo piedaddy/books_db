@@ -1,0 +1,17 @@
+body {
+  font-family: "Spartan", sans-serif;
+  background-color: #e7f7f1;
+}
+
+nav {
+  text-decoration: none;
+}
+
+.table_headers {
+  font-weight: bold;
+}
+
+.bookshop_data {
+  border: 1px solid black;
+}
+

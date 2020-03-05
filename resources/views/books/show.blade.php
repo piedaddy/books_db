@@ -1,3 +1,7 @@
+@extends('admin.layout')
+
+@section('books_index')
+
 <div> 
 
   <div style="display:flex;">
@@ -26,7 +30,7 @@
      
 
   
-        <p>Reviews:
+        <p>Reviews: <br>
         {{-- @if(isset($book->review))
         There are no reviews currently for this book</p>
         @endif --}}
@@ -39,16 +43,30 @@
           {{-- // because i defined a relationship between book and review i can jsut select it from the books --}}
             <div class="reviews">
               <strong>{{$review->review}}</strong><br>
-              <p>Written by: {{$review->name}}</p>
+              <p>Written by: {{$review->user->name}}</p>
+
+              @can('admin')
+              <form action="{{action('ReviewController@delete', $review->id) }}" method="post">
+                @method('delete')
+                @csrf
+                <input type="submit" value="delete">
+              </form>
+              @endcan
             </div>
           @endforeach 
          
-
+@guest
+   <h4>please <a href="{{action('Auth\LoginController@showLoginForm')}}">login</a> to leave a review</h4>
+   {{--ANOTHER WAY
+     <h4>please <a href="{{route('login')}}">login</a> to leave a review</h4> 
+    --}}
+@endguest
 
 
           {{-- <p>{{$book->reviews->review->name == null ? 'Be the first!' : 'Add a review'}}</p> --}}
-
-          <p>Add a review</p>
+  @auth
+  {{-- this just means "if auth is checked" therefore this is an IF, so we can use else statmenets inside --}}
+        <p>Add a review</p>
         @if (count($errors) > 0)
         <div class="alert alert-danger">
             <ul>
@@ -72,15 +90,21 @@
           @csrf
           <textarea name="review" rows="3" cols="30" placeholder="Write your review here">{{old('review')}}</textarea>
           <br>
-          <input type="text" name="name" value= "{{old('name')}}" placeholder="Your Name">
+          {{-- <input type="text" name="name" value= "{{old('name')}}" placeholder="Your Name">
           <br>
-          <input type="email" name="email" value= "{{old('email')}}" placeholder="Your Email">
+          <input type="email" name="email" value= "{{old('email')}}" placeholder="Your Email"> --}}
+          <input type="text" name="name" disabled value= "{{Auth::user()->name}}" placeholder="Your Name">
+          <br>
+          <input type="email" name="email" disabled value= "{{Auth::user()->email}}" placeholder="Your Email">
           <br>
           <input type="submit" value="submit review">
         </form>
+  @endauth
+
+  <a href="{{action('BookExampleController@edit', ['id' => $book->id])}}" >Add Genre</a>
 
       <a href="{{ action('BookExampleController@index') }}">Go back to catalogue!</a>
-      <a href="{{ action('CartController@add', [$id]) }}">Add to cart</a>
+      <a href="{{ action('CartController@postAdd', [$id]) }}">Add to cart</a>
 
     </div>
 
@@ -90,3 +114,5 @@
     <a href="{{action('BookExampleController@delete', $id)}}">Delete this book</a>
   </nav>
 </div>
+
+@endsection

@@ -1,3 +1,6 @@
+@extends('admin.layout')
+
+@section('create')
 <h1>Add a new book!</h1>
 <form action="/books" method="post" enctype="multipart/form-data">
   @csrf 
@@ -31,3 +34,5 @@
 
   <input type="submit" value="submit">
 </form>
+
+@endsection

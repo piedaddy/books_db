@@ -18,15 +18,16 @@ class ReviewController extends Controller
 
      // we need to validate request
      $this->validate($request, [
-       'name' => 'required',
-       'review' => 'required|max:255',
-       'email' => 'required|email'
+      //  'name' => 'required',
+       'review' => 'required|max:255'
+     //  'email' => 'required|email'
      ]);
     // need to create new review (and add it to the right book)
     $review = new Review;
     $review->book_id = $book_id;
-    $review->name = $request->input('name');
-    $review->email = $request->input('email');
+    $review->user_id = auth()->id();
+    //$review->name = $request->input('name');
+    //$review->email = $request->input('email');
     $review->review = $request->input('review');
     $review->save();
     //send success message
@@ -34,7 +35,17 @@ class ReviewController extends Controller
     //redirect 
     return redirect('/books/show/'.$book_id);
 
+  }
 
+  public function delete(Request $request, $id)
+  {
+    $review = Review::findOrFail($id);
+    $review->delete();
+    session()->flash('success_message', 'Review deleted!');
+    return redirect()->back();
+  
+  }
+    
 
 ///EASIER WAY TO FILL A METHOD
    /*
@@ -76,7 +87,7 @@ class ReviewController extends Controller
     $reivew->fill($request->except(['password']));
    
     */ 
-  }
+  
 
 
 

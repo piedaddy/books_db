@@ -38,8 +38,8 @@ class BookExampleController extends Controller
 //to create new book
     public function create()
     {
-        $publishers= Publisher::all(); 
-        $genres = Genre::all();
+        $publishers = Publisher::all(); 
+        $genres     = Genre::all();
         return view('books.create', compact('publishers', 'genres'));
     }
 
@@ -57,11 +57,11 @@ class BookExampleController extends Controller
         }
 
         $b = new Book;
-        $b->title = $request->input('title');
-        $b->authors = $request->input('author');
-        $b->image = $request->input('image');
-        $b->image_file= !empty($original_name) ? '/uploads/covers/'.$original_name : null;
-        $b->publisher_id= $request->input('publisher_id');
+        $b->title        = $request->input('title');
+        $b->authors      = $request->input('author');
+        $b->image        = $request->input('image');
+        $b->image_file   = !empty($original_name) ? '/uploads/covers/'.$original_name : null;
+        $b->publisher_id = $request->input('publisher_id');
         $b->save();
 
         return redirect()->action('BookExampleController@index');
@@ -80,12 +80,12 @@ class BookExampleController extends Controller
     public function update(Request $request, $id)
     {
         $book = Book::find($id); 
-        $book->title = $request->input('title');
-        $book->authors = $request->input('author');
-        $book->image = $request->input('image');
-        $book->genre_id=$request->input('genre_id');
-        $book->genre=$request->input('genre');
-        $book->publisher_id= $request->input('publisher_id');
+        $book->title        = $request->input('title');
+        $book->authors      = $request->input('author');
+        $book->image        = $request->input('image');
+        $book->genre_id     = $request->input('genre_id');
+        $book->genre        = $request->input('genre');
+        $book->publisher_id = $request->input('publisher_id');
         $book->save();
 
         //return redirect('/books/show/'.$id); // this is so that the url will change, and the form wont be resubmitted if the user refereshes
@@ -105,12 +105,14 @@ class BookExampleController extends Controller
     {
         $this->validate($request, [
             'review' => 'required|max:255',
-            'name' => 'required',
+            //'name' => 'required',
         ]); 
         $review = new Review;
         $review->review = $request->input('review');
-        $review->name = $request->input('name');
-        $review->book_id = $book_id;          
+        //$review->name = $request->input('name');
+        $review->book_id = $book_id;
+        $review->user_id = auth()->id();
+          
         $review->save();
         session()->flash('success_message', 'Review saved!');
         return redirect('/books/show/'.$book_id);
@@ -119,7 +121,7 @@ class BookExampleController extends Controller
 
     public function search(Request $request) 
     {
-        $name = $request->input('search');
+        $name  = $request->input('search');
         $books = Book::where('title', 'like', $name)->get();
         return view('/books/index', compact('books'));
     }
