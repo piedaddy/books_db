@@ -28,11 +28,6 @@
         <li>{{$genre->name}}</li>
       </ul>
       @endforeach
-
-      {{-- get property of publisher, and then get the title --}}
-      {{-- $book=element  publisher = method delcared in Boook.php  title= part of table in publisher  --}}
-      {{-- the book belongs to the publisher 
-      if something1 belongs to something2, then something2 will have an id inside the something1 --}}
      
 @auth
       <div class="bookshop-book-list">
@@ -46,9 +41,9 @@
 @endauth
 
         <p>Reviews: <br>
-        {{-- @if(isset($book->review))
+        @if(($book->reviews)->count() == 0)
         There are no reviews currently for this book</p>
-        @endif --}}
+        @endif 
           @foreach($book->reviews as $review) 
           {{-- @foreach($book->reviews()->latest()->get() as $review)  --}}
           {{-- @foreach($book->reviews()->orderBy('created_at', 'asc')->get() as $review)  --}}
@@ -79,7 +74,10 @@
 
 
           {{-- <p>{{$book->reviews->review->name == null ? 'Be the first!' : 'Add a review'}}</p> --}}
-  @auth
+  
+
+
+    @auth
   {{-- this just means "if auth is checked" therefore this is an IF, so we can use else statmenets inside --}}
         <p>Add a review</p>
         @if (count($errors) > 0)
@@ -96,7 +94,6 @@
               {{ Session::get('success_message') }}
           </div>
         @endif
-    
 
         <form action="{{action('BookExampleController@review', ['id'=> $book->id])}}" method="post"> 
           {{-- <form action="{{action('BookExampleController@review', $book->id)}}" method="post">
@@ -115,6 +112,31 @@
           <input type="submit" value="submit review">
         </form>
   @endauth
+
+  @can('admin')
+  <h3>Related Books:</h3>
+  <ol>
+  @foreach($book->relbooks as $b)
+    <div class="related-books">
+       <li> <h5>{{$b->title}}</h5></li>
+        <form action="{{action('BookExampleController@removeRelatedBook', $book->id)}} " method="post">
+          @csrf
+          <input type="hidden" value="{{$b->id}}">
+          <input type="submit" value="delete">
+        </form>
+      </div>
+  @endforeach
+  </ol>
+  <form action ="{{action('BookExampleController@addRelatedBook', $book->id)}}" method="post">
+    @csrf
+    <select name="related_book">
+      @foreach($relBook as $book)
+      <option value ="{{$book->id}}">{{$book->title}}</option>
+      @endforeach
+    </select>
+    <input type="submit">
+  </form> 
+  @endcan
 
   <a href="{{action('BookExampleController@edit', ['id' => $book->id])}}" >Add Genre</a>
 

@@ -37,7 +37,11 @@ class Book extends Model
 
     public function bookshops()
     {
-        return $this->belongsToMany(Bookshop::class);
+        return $this
+                    ->belongsToMany(Bookshop::class)
+                    ->withPivot(['count']); // array of the values that we want to use
+                    //we are saying that we also want to get access to the Pivot table, kinda like creating a pivot model
+
     }
 
 
@@ -54,4 +58,9 @@ class Book extends Model
         return $this->belongsToMany(Genre::class); 
     }
 
+
+    public function relbooks()
+    {
+        return $this->belongsToMany(Book::class, 'book_book', 'book_id', 'book2_id');
+    }
 }

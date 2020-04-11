@@ -18,7 +18,7 @@ class BookExampleController extends Controller
     {
         $books = Book::orderBy('title', 'asc')->get();
         $genre = Genre::all();
-        $view = view('books.index', compact('books', 'genre'));
+        $view  = view('books.index', compact('books', 'genre'));
              // same as books/index
         return $view;
     }
@@ -34,8 +34,9 @@ class BookExampleController extends Controller
        //return $book->publisher->books;
             // will give us all the books where the publisher id is equal to the publisher id
         $bookshops = Bookshop::all();
-        $genres = Genre::all();
-        $view = view('books.show', compact('book','id', 'bookshops', 'genres'));
+        $genres    = Genre::all();
+        $relBook   = Book::all();
+        $view      = view('books.show', compact('book','id', 'bookshops', 'genres', 'relBook'));
         return $view;
     }
 
@@ -74,9 +75,9 @@ class BookExampleController extends Controller
 //to edit book
     public function edit($id)
     {
-        $book = Book::find($id);
+        $book       = Book::find($id);
         $publishers = Publisher::all();
-        $genres = Genre::all();
+        $genres     = Genre::all();
         return view('books.edit', compact('book', 'publishers', 'genres', 'id'));
     }
 
@@ -136,5 +137,21 @@ class BookExampleController extends Controller
         $name  = $request->input('search');
         $books = Book::where('title', 'like', $name)->get();
         return view('/books/index', compact('books'));
+    }
+
+    public function addRelatedBook(Request $request, $id)
+    {
+        $book1 = Book::findOrFail($id);
+        $book2 = $request->input('related_book');
+        $book1->relbooks()->attach($book2);
+        return redirect()->action('BookExampleController@show', $id);
+    }
+
+    public function removeRelatedBook(Request $request, $id)
+    {
+        $book1 = Book::findOrFail($id);
+        $book2 = $request->input('related_book');
+        $book1->relbooks()->detach($book2);
+        return redirect()->action('BookExampleController@show', $id);
     }
 }

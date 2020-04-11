@@ -1,5 +1,5 @@
 @extends('admin.layout')
-@section('content')
+@section('index')
 
   <h2>List of Bookshops</h2>
 

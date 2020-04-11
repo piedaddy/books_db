@@ -1,3 +1,7 @@
+@extends('admin.layout')
+
+@section('edit')
+
 <form action="/books/{{$book->id}}/edit" method="post"> <!--it is still post because we are sending it to another server, now we are sending hte data to the update method--> 
   @csrf 
   {{-- <label>Title</label>

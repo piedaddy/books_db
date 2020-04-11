@@ -48,11 +48,13 @@ class BookshopController extends Controller
     {
         $bookshop = Bookshop::findOrFail($id);
         $book     = $request->input('book_id');
+        $count    = $request->input('count');
 
         if($bookshop->books()->find($book) === null) {
 //   this is the method we defined in the model!
 //                  vvv
-        $bookshop->books()->attach($book); // now we have attached the book that we selected from the ID and connects it to the bookshop ID
+        $bookshop->books()->attach($book, ['count' => $count]); // now we have attached the book that we selected from the ID and connects it to the bookshop ID
+                            //the second paramenter is an array with the name of the column and then the value for it
         }
         //this is the same as
         //        $bookshop->books()->synchWithoutDetaching($book); 
@@ -64,6 +66,19 @@ class BookshopController extends Controller
                             // return $bookshop->books()->get;
         //return $bookshop->books()->where('id', '<', 5)->get; // would give us books with an ID of 5 or less
         // return $bookshop->books()->where('id', '<', 5)->toSql();  //will give us the SQL query!!!
+
+        else {
+            /*     //can be done like this but this will make it so a new ADD will rewrite the current amount 
+
+            $bookshop->books()->detach($book);
+            $bookshop->books()->attach($book, ['count' => $count]);
+            */ 
+            //or like this to make it so when you press ADD you are just adding the total count
+            $oldCount = $bookshop->books()->find($book)->pivot->count;
+            $count = $oldCount + $count;
+            $bookshop->books()->updateExistingPivot($book, ['count' => $count]);
+        }
+
 
         //every relationship is defined as object
         return redirect()->action('BookshopController@show', $bookshop->id);

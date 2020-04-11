@@ -15,6 +15,9 @@ class Bookshop extends Model
 
     public function books()
     {
-        return $this->belongsToMany(Book::class);
+                                                //name of the table
+        return $this
+                    ->belongsToMany(Book::class, 'book_bookshop')
+                    ->withPivot(['count']); // array of the values that we want to use
     }
 }

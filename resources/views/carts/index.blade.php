@@ -1,6 +1,6 @@
 @extends('admin.layout')
 
-@section('cart_index')
+@section('index')
 <div>
   <h2>Cart</h2>
   <nav>

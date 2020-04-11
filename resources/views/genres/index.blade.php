@@ -1,6 +1,7 @@
 @extends('admin.layout')
 
-@section('genre_index')
+@section('index')
+
 <div>
   <a href="{{action('BookExampleController@index')}}">Back to directory</a>
   <a href="{{action('GenreController@create')}}">Add a new genre</a>

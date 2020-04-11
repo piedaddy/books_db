@@ -19,13 +19,16 @@
             <option value="{{$book->id}}">{{$book->title}}</option>
           @endforeach
         </select>
+        <input type="number" name="count" value="0">
           <button type="submit">Add</button>
       </form> 
       @endauth
 
       <ol>
         @foreach($bookshop->books as $book)
+        {{-- <div style="display:flex;"> --}}
           <li><h4>{{$book->title}}</h4></li>
+          <p>({{$book->pivot->count}} copies)</p> 
           @can('admin')
           <form action= "{{action('BookshopController@removeBook', $bookshop->id)}}" method="post">
             @csrf

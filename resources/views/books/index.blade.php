@@ -1,6 +1,6 @@
 @extends('admin.layout')
 
-@section('books_index')
+@section('index')
 <div> 
 <h1>Book Directory</h1>
 <nav>
@@ -9,9 +9,7 @@
   <a href="{{action('CartController@empty')}}">Empty cart</a>
   <a href="{{action('GenreController@index')}}">List of genres</a>
   <a href="{{action('BookshopController@index')}}">List of bookshops</a>
-
-  
-
+  <a href="{{action('PublisherController@index')}}">List of publishers</a>
 
 </nav>
 

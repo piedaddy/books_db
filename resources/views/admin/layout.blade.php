@@ -17,9 +17,11 @@
   @yield('cart_show')
   @yield('genre_index')
   @yield('genre_show')
-
+  @yield('edit')
   @yield('content')
   @yield('create')
+  @yield('index')
+
 
 
 

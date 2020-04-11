@@ -47,6 +47,11 @@ Route::get('/books/{id}/delete', 'BookExampleController@delete');
 //MORNING WORKOUT DAY 37
 Route::post('/books/review/{id}', 'BookExampleController@review');
 
+
+
+Route::post('/books/add-related/{id}', 'BookExampleController@addRelatedBook'); 
+Route::post('/books/remove-related/{id}', 'BookExampleController@removeRelatedBook'); 
+
 //If i want to use a new controller for the reviews
 // Route::post('/review/{book_id}', 'ReviewController@store')->middleware('auth'); 
 
